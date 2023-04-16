@@ -1,0 +1,6 @@
+andresplazas
+maY21TqvAgNLrOSr
+
+mongodb+srv://andresplazas:<password>@apirestinventario.dipexte.mongodb.net/test
+
+mongodb+srv://andresplazas:maY21TqvAgNLrOSr@apirestinventario.dipexte.mongodb.net/test

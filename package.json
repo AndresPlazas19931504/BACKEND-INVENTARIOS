@@ -1,0 +1,17 @@
+{
+  "name": "backend-inventarios",
+  "version": "1.0.0",
+  "description": "API REST Inventarios",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "AndresPlazas",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongodb": "^5.2.0",
+    "mongoose": "^7.0.3"
+  }
+}
