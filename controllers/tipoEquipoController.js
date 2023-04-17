@@ -16,20 +16,31 @@ const createTipoEquipo = async (req = request, res = response) => {
             nombre
         }
         const tipoEquipo = new TipoEquipo(data)
-        //console.log(tipoEquipo)
         await tipoEquipo.save()
         return res.status(201).json(tipoEquipo)
     }catch(e){
         return res.status(500).json({
-            msg: e
-        })
+            msg: e})
     }
 }
 
 /*
 Edición
 */
+const putTipoEquipo = async (req = request, res = response) => {
+    try{
+        const { id } = req.query
+        const data = req.body
+        data.fechaActualizacion = new Date()
 
+        const tipoEquipoBD = await TipoEquipo.findByIdAndUpdate(id, data, { new: true })
+        if(!tipoEquipoBD) return res.json({msg: 'No existe el tipo de equipo'})
+
+        return res.json({tipoEquipoBD})
+    }catch(e){
+        return res.status(500).json({msg: e})
+    } 
+}
 /*
 Listar
 */
@@ -46,6 +57,24 @@ const getTipoEquipo = async (req = request, res = response) => {
         })
     }
 }
+/*
+Eliminar
+*/
+const deleteTipoEquipo = async (req = request, res = response) => {
+    try{
+        const { id } = req.query
+        const tipoEquiposDB = await TipoEquipo.findById(id)
+        
+        if (tipoEquiposDB) {
+            const tipoEquiposDBEliminar = await TipoEquipo.findOneAndDelete(id)
+            return res.json({msg: 'Fue eliminado el ID estado del equipo'} )}
+        if(!tipoEquiposDB){
+            return res.json({ msg: 'No exite el ID estado de equipo'} )
+        }
+    }catch(e) {
+        return res.status(500).json({msg: e})
+    }
+}
 
 
-module.exports = {createTipoEquipo, getTipoEquipo}
+module.exports = {createTipoEquipo, getTipoEquipo, putTipoEquipo, deleteTipoEquipo }

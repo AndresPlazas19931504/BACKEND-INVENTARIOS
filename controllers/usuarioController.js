@@ -32,7 +32,20 @@ const createUsuario = async (req = request, res = response) => {
 /*
 Edición
 */
+const putUsuario = async (req = request, res = response) => {
+    try{
+        const { id } = req.query
+        const data = req.body
+        data.fechaActualizacion = new Date()
 
+        const usuarioBD = await Usuario.findByIdAndUpdate(id, data, { new: true })
+        if(!usuarioBD) return res.json({msg: 'No existe el usuario'})
+
+        return res.json({usuarioBD})
+    }catch(e){
+        return res.status(500).json({msg: e})
+    } 
+}
 /*
 Listar
 */
@@ -49,6 +62,23 @@ const getUsuario = async (req = request, res = response) => {
         })
     }
 }
+/*
+Eliminar
+*/
+const deleteUsuario = async (req = request, res = response) => {
+    try{
+        const { id } = req.query
+        const usuarioBD = await Usuario.findById(id)
+        
+        if (usuarioBD) {
+            const usuarioBDEliminar = await Usuario.findOneAndDelete(id)
+            return res.json({msg: 'Fue eliminado el ID estado del equipo'} )}
+        if(!usuarioBD){
+            return res.json({ msg: 'No exite el ID estado de equipo'} )
+        }
+    }catch(e) {
+        return res.status(500).json({msg: e})
+    }
+}
 
-
-module.exports = {createUsuario, getUsuario}
+module.exports = { createUsuario, getUsuario, putUsuario, deleteUsuario }

@@ -29,7 +29,20 @@ const createMarca = async (req = request, res = response) => {
 /*
 Edición
 */
+const putMarca = async (req = request, res = response) => {
+    try{
+        const { id } = req.query
+        const data = req.body
+        data.fechaActualizacion = new Date()
 
+        const marcaBD = await Marca.findByIdAndUpdate(id, data, { new: true })
+        if(!marcaBD) return res.json({msg: 'No existe la marca de equipo'})
+
+        return res.json({marcaBD})
+    }catch(e){
+        return res.status(500).json({msg: e})
+    } 
+}
 /*
 Listar
 */
@@ -38,7 +51,7 @@ const getMarca = async (req = request, res = response) => {
     try{
         const { estado } = req.query;
         
-        const marcaBD = await Marca.find({estado})/* Select * from Usuarios*/
+        const marcaBD = await Marca.find({estado})
         return res.json(marcaBD)
     }catch(e) {
         return res.status(500).json({
@@ -46,6 +59,23 @@ const getMarca = async (req = request, res = response) => {
         })
     }
 }
+/*
+Eliminar
+*/
+const deleteMarca = async (req = request, res = response) => {
+    try{
+        const { id } = req.query
+        const marcaBD = await Marca.findById(id)
+        
+        if (marcaBD) {
+            const marcaBDEliminar = await Marca.findOneAndDelete(id)
+            return res.json({msg: 'Fue eliminado el ID estado del equipo'} )}
+        if(!marcaBD){
+            return res.json({ msg: 'No exite el ID estado de equipo'} )
+        }
+    }catch(e) {
+        return res.status(500).json({msg: e})
+    }
+}
 
-
-module.exports = {createMarca, getMarca}
+module.exports = {createMarca, getMarca, putMarca, deleteMarca}
