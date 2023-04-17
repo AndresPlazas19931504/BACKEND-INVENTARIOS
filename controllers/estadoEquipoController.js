@@ -48,7 +48,7 @@ const getEstadoEquipo = async (req = request, res = response) => {
 
     try{
         const { estado } = req.query;
-        const estadoEquiposDB = await EstadoEquipo.find({estado})/* Select * from EstadoEquipos*/
+        const estadoEquiposDB = await EstadoEquipo.find({estado})
         return res.json(estadoEquiposDB)
     }catch(e) {
         return res.status(500).json({ msg: e })

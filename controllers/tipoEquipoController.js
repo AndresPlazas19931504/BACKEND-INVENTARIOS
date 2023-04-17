@@ -29,7 +29,7 @@ Edición
 */
 const putTipoEquipo = async (req = request, res = response) => {
     try{
-        const { id } = req.query
+        const { id } = req.params
         const data = req.body
         data.fechaActualizacion = new Date()
 
